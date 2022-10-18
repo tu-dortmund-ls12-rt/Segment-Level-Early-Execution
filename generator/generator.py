@@ -42,6 +42,8 @@ def generate(ntasks, msets, utilization, mod):
             # task w.r.t. execution times
             for k in range(num_segments*2-1):
                 task[k] = task[k] * period
+            # attach the utilization (for ordering later)
+            task.append(execution_total)
             # attach the period in the end
             task.append(period)
             taskset.append(task)			
