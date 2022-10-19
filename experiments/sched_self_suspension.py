@@ -1,10 +1,13 @@
 from __future__ import division
 import numpy as np
-import os
 import math
 import sys
 import getopt
-import csv
+import os
+import json
+
+sys.path.append('../')
+from algorithms import list_sched
 
 def main(argv):
     ntasks = 10
@@ -13,6 +16,7 @@ def main(argv):
     suspension_mod = 0
     lbd = 0.5
     ubd = 0.5
+    hyper_period = 1000
 
     try:
         opts, args = getopt.getopt(argv, "hn:m:p:s:u:", ["ntasks=", "msets=", "processors", "smod=", "lbd=", "ubd="])
@@ -36,38 +40,36 @@ def main(argv):
         elif opt in ("-u", "--ubd"):
             ubd = int(arg)
 
+    sched = []
+
+    sched_name_ss = './outputs/results_sched_n'+ str(ntasks) + '_m' + str(msets) + '_p' + str(
+            processors) + '_s' + str(suspension_mod) + '.npy'
+
+    print ('Starting series...')
+
     for i in range(101, 105, 5):
         utli = float(i / 100)
-        tasksets_name = '../experiments/inputs/tasksets_n' + str(ntasks) + '_m' + str(msets) + '_p' + str(
-            processors) + '_s' + str(suspension_mod) + '_u' + str(utli) + '.npy'
+        sched_utli = []
 
+        tasksets_name = './inputs/tasksets_n' + str(ntasks) + '_m' + str(msets) + '_p' + str(
+            processors) + '_s' + str(suspension_mod) + '_u' + str(utli) + '.npy'
         tasksets_org = np.load(tasksets_name, allow_pickle=True)
 
-        job_name = '../experiments/inputs/jobs/jobs_n' + str(ntasks) + '_m' + str(msets) + '_p' + str(
+        job_name = './inputs/jobs/jobs_n' + str(ntasks) + '_m' + str(msets) + '_p' + str(
             processors) + '_s' + str(suspension_mod) + '_l' + str(lbd) + '_h' + str(ubd) + '_u' + str(utli) + '.npy'
 
-        jobs_set = []
-        for st in range(0, msets):
-            jobs = []
-            for ntsk in range(0, ntasks):
-                for per in range(0, 1000, tasksets_org[st][ntsk][-1]):
-                    job = []
-                    # real execution times and suspension times
-                    for jb in range(len(tasksets_org[st][ntsk])-2):
-                        job.append(tasksets_org[st][ntsk][jb] * np.random.uniform(lbd, ubd))
-                    # utilization for total executions (except the suspensions)
-                    job.append(tasksets_org[st][ntsk][-2])
-                    # period
-                    job.append(int(tasksets_org[st][ntsk][-1]))
-                    # starting time
-                    job.append(int(per))
-                    # deadline
-                    job.append(int(per + tasksets_org[st][ntsk][-1]))
-                    # id of task
-                    job.append(int(ntsk))
-                    jobs.append(job)
-            jobs_set.append(jobs)
-        np.save(job_name, jobs_set)
+        jobs_org = np.load(job_name, allow_pickle=True)
+
+        ##########################################################################################
+
+        sched_ss_edf = list_sched.edf_ss_sched(jobs_org, msets, hyper_period)
+        sched_utli.append(sched_ss_edf)
+        sched_ss_rm = list_sched.rm_ss_sched(tasksets_org, jobs_org, msets, hyper_period)
+        sched_utli.append(sched_ss_rm)
+
+        sched.append(sched_utli)
+    
+    np.save(sched_name_ss, sched)
 
 if __name__ == "__main__":
     main(sys.argv[1:])
