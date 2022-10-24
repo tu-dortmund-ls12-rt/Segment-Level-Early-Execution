@@ -11,8 +11,8 @@ def main(argv):
     msets = 100
     processors = 1
     suspension_mod = 0
-    lbd = 0.5
-    ubd = 0.5
+    lbd = 1
+    ubd = 1
 
     try:
         opts, args = getopt.getopt(argv, "hn:m:p:s:u:", ["ntasks=", "msets=", "processors", "smod=", "lbd=", "ubd="])
@@ -36,7 +36,7 @@ def main(argv):
         elif opt in ("-u", "--ubd"):
             ubd = int(arg)
 
-    for i in range(101, 105, 5):
+    for i in range(100, 101, 5):
         utli = float(i / 100)
         tasksets_name = '../experiments/inputs/tasksets_n' + str(ntasks) + '_m' + str(msets) + '_p' + str(
             processors) + '_s' + str(suspension_mod) + '_u' + str(utli) + '.npy'

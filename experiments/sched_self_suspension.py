@@ -14,8 +14,8 @@ def main(argv):
     msets = 100
     processors = 1
     suspension_mod = 0
-    lbd = 0.5
-    ubd = 0.5
+    lbd = 1
+    ubd = 1
     hyper_period = 1000
 
     try:
@@ -47,7 +47,7 @@ def main(argv):
 
     print ('Starting series...')
 
-    for i in range(101, 105, 5):
+    for i in range(90, 101, 5):
         utli = float(i / 100)
         sched_utli = []
 
@@ -62,10 +62,14 @@ def main(argv):
 
         ##########################################################################################
 
-        sched_ss_edf = list_sched.edf_ss_sched(jobs_org, msets, hyper_period)
-        sched_utli.append(sched_ss_edf)
-        sched_ss_rm = list_sched.rm_ss_sched(tasksets_org, jobs_org, msets, hyper_period)
-        sched_utli.append(sched_ss_rm)
+        #sched_ss_edf = list_sched.edf_ss_sched(jobs_org, msets, hyper_period)
+        #sched_utli.append(sched_ss_edf)
+        #sched_ss_rm = list_sched.rm_ss_sched(tasksets_org, jobs_org, msets, hyper_period)
+        #sched_utli.append(sched_ss_rm)
+        sched_ss_ob_edf = list_sched.edf_ss_ob_sched(jobs_org, msets, hyper_period)
+        sched_utli.append(sched_ss_ob_edf)
+        sched_ss_ob_rm = list_sched.rm_ss_ob_sched(tasksets_org, jobs_org, msets, hyper_period)
+        sched_utli.append(sched_ss_ob_rm)
 
         sched.append(sched_utli)
     

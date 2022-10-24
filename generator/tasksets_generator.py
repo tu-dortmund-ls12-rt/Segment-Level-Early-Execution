@@ -33,7 +33,7 @@ def main(argv):
         elif opt in ("-s", "--smod"):
             suspension_mod = int(arg)
 
-    for i in range(101, 105, 5):
+    for i in range(100, 101, 5):
         utli = float(i / 100)
         tasksets_name = '../experiments/inputs/tasksets_n' + str(ntasks) + '_m' + str(msets) + '_p' + str(processors) + '_s' + str(suspension_mod) + '_u' + str(utli) + '.npy'
         tasksets = gen.generate(ntasks, msets, processors * utli, suspension_mod)
