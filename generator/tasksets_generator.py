@@ -11,12 +11,14 @@ def main(argv):
     ntasks = 10
     msets = 100
     processors = 1
-    suspension_mod = 0
+    suspension_length_mod = 0
     # suspension mode: 0-short, 1-moderate, 2-long
+    suspension_num_mod = 0
+    # num_segments mode: 0-2, 1-5, 2-8
 
     try:
-        opts, args = getopt.getopt(argv, "hn:m:p:s:",
-                                   ["ntasks=", "msets=", "processors", "smod="])
+        opts, args = getopt.getopt(argv, "hn:m:p:r:s:",
+                                   ["ntasks=", "msets=", "processors", "rmod=", "smod="])
     except getopt.GetoptError:
         print ('tasksets_generater_periodic.py -n <n tasks for each set> -m <m tasksets> -p <num of processors> -s <suspension mod>')
         sys.exit(2)
@@ -30,13 +32,15 @@ def main(argv):
             msets = int(arg)
         elif opt in ("-p", "--processors"):
             processors = int(arg)
+        elif opt in ("-r", "--rmod"):
+            suspension_length_mod = int(arg)
         elif opt in ("-s", "--smod"):
-            suspension_mod = int(arg)
+            suspension_num_mod = int(arg)
 
-    for i in range(100, 101, 5):
+    for i in range(5, 101, 5):
         utli = float(i / 100)
-        tasksets_name = '../experiments/inputs/tasksets_n' + str(ntasks) + '_m' + str(msets) + '_p' + str(processors) + '_s' + str(suspension_mod) + '_u' + str(utli) + '.npy'
-        tasksets = gen.generate(ntasks, msets, processors * utli, suspension_mod)
+        tasksets_name = '../experiments/inputs/tasksets_n' + str(ntasks) + '_m' + str(msets) + '_p' + str(processors) + '_r' + str(suspension_length_mod) + '_s' + str(suspension_num_mod) + '_u' + str(utli) + '.npy'
+        tasksets = gen.generate(ntasks, msets, processors * utli, suspension_length_mod, suspension_num_mod)
         np.save(tasksets_name, tasksets)
 
 if __name__ == "__main__":
