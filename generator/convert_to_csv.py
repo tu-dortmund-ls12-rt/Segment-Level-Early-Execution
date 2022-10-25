@@ -97,8 +97,8 @@ def main(argv):
                     path_dict['Cseg'] = exec_segments
                     path_dict['Sseg'] = sus_segmants
                     path_dict['deadline'] = deadlines
-                    json_path = json.dumps([path_dict])
-                    task_csv.append(json_path)
+                    # json_path = json.dumps([path_dict])
+                    task_csv.append([path_dict])
                     #Cseg
                     task_csv.append(exec_segments)
                     #Sseg
