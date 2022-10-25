@@ -55,7 +55,7 @@ def main(argv):
         for st in range(0, msets):
             jobs = []
             for ntsk in range(0, ntasks):
-                for per in range(0, 1000, tasksets_org[st][ntsk][-1]):
+                for per in range(0, 1000, int(tasksets_org[st][ntsk][-1])):
                     job = []
                     # real execution times and suspension times
                     for jb in range(len(tasksets_org[st][ntsk])-2):
