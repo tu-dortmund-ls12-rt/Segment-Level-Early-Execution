@@ -77,7 +77,10 @@ def main(argv):
                         sus_segmants.append(math.ceil(tasksets_org[j][k][seg+1] * ratio))
                         deadlines.append(-1)
                     exec_segments.append(math.ceil(tasksets_org[j][k][-3] * ratio))
-                    deadlines.append(-1)
+                    deadlines.append(int(tasksets_org[j][k][-1] * ratio))
+
+                    for dd in (len(deadlines)-2, -1, -1):
+                        deadlines[dd] = deadlines[dd+1] - exec_segments[dd+1] - sus_segmants[dd]
 
                     task_csv = []
                     # period

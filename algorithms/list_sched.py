@@ -294,7 +294,26 @@ def rm_ss_sched(task_org, tasksets, num_sets, hyper_period):
         accept = rm_self_suspension(tasksets[i], hyper_period, deadlines, num_segments, priorities)
         # print (accept)
         accepted = accepted + accept
-    print (accepted)
+    #print (accepted)
+    return accepted
+
+def combined_ss_sched(task_org, tasksets, num_sets, hyper_period):
+    tasks_org = copy.deepcopy(task_org)
+    tasksets = copy.deepcopy(tasksets)
+    n_sets = num_sets
+    accepted = []
+
+    for i in range(0, n_sets):
+        num_segments = []
+        priorities = rm_priority(tasks_org[i])
+        for j in range(len(tasksets[i])):
+            num_segments.append(len(tasksets[i][j]) - 5)
+        deadlines = deadline_update(tasksets[i])
+        accept_1 = rm_self_suspension(tasksets[i], hyper_period, deadlines, num_segments, priorities)
+        accept_2 = edf_self_suspension(tasksets[i], hyper_period, deadlines, num_segments)
+        # print (accept)
+        accepted.append(max(accept_1, accept_2))
+    #print (accepted)
     return accepted
 
 def edf_ss_ob_sched(tasksets, num_sets, hyper_period):
