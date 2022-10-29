@@ -41,8 +41,8 @@ fig=plt.figure()
 ax=fig.add_subplot(111)
 fig.subplots_adjust(top=0.8,bottom=0.12,left=0.15,right=0.9,hspace =0.2,wspace=0.16)
 
-ax.set_xlabel(r'Utilization (\%) / M',labelpad=20.0,size=28)
-ax.set_ylabel('Acceptance Ratio (\%)',labelpad=25.0,size=28)
+ax.set_xlabel(r'Utilization (\%) / M',labelpad=20.0,size=25)
+ax.set_ylabel('Acceptance Ratio (\%)',labelpad=25.0,size=25)
 ax.spines['top'].set_color('none')
 ax.spines['bottom'].set_color('none')
 ax.spines['left'].set_color('none')
@@ -182,12 +182,10 @@ for i in range(1, 10):
     ax.axis([3,103,-5,105])
     major_ticks = np.arange(5, 103, 10)
     minor_ticks = np.arange(5, 103, 5)
-    ax.plot(x1, y1, color='red', label='SIM-EDF', linewidth=2.0, marker='D', markersize=12, markevery=1, fillstyle='none')
-    ax.plot(x2, y2, color='red', label='SIM-RM', linewidth=2.0, marker='o', markersize=12, markevery=1, fillstyle='none')
-    ax.plot(x3, y3, color='green', label='SIM-EDF-OB', linewidth=2.0, marker='X', markersize=12, markevery=1,
-            fillstyle='none')
-    ax.plot(x4, y4, color='green', label='SIM-RM-OB', linewidth=2.0, marker='H', markersize=12, markevery=1,
-            fillstyle='none')
+    ax.plot(x1, y1, color='red', label='NOM-EDF', linewidth=2.0, marker='D', markersize=12, markevery=1, fillstyle='none')
+    ax.plot(x2, y2, color='red', label='NOM-RM', linewidth=2.0, marker='o', markersize=12, markevery=1, fillstyle='none')
+    #ax.plot(x3, y3, color='green', label='SIM-EDF-OB', linewidth=2.0, marker='X', markersize=12, markevery=1, fillstyle='none')
+    #ax.plot(x4, y4, color='green', label='SIM-RM-OB', linewidth=2.0, marker='H', markersize=12, markevery=1, fillstyle='none')
 
     ax.plot(x6, y6, color='blue', label='SCAIR-OPA', linewidth=2.0, marker='v', markersize=12, markevery=1, fillstyle='none')
     ax.plot(x7, y7, color='blue', label='SCAIR-RM', linewidth=2.0, marker='s', markersize=12, markevery=1, fillstyle='none')
@@ -203,9 +201,9 @@ for i in range(1, 10):
     for tick in ax.yaxis.get_major_ticks():
         tick.label.set_fontsize(20)
     if (i == 1):
-        ax.legend(bbox_to_anchor=(1.75, 1.65),
+        ax.legend(bbox_to_anchor=(1.7, 1.6),
             loc=10,
-            ncol=4,
+            ncol=5,
             markerscale =1.5,
             borderaxespad=0.,
             prop={'size':20})
