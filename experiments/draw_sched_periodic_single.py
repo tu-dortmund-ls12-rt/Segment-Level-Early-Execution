@@ -41,7 +41,7 @@ fig=plt.figure()
 ax=fig.add_subplot(111)
 fig.subplots_adjust(top=0.8,bottom=0.35,left=0.25,right=0.85,hspace =0.2,wspace=0.16)
 
-ax.set_xlabel(r'Utilization (\%) / M',labelpad=25.0,size=35)
+ax.set_xlabel(r'Utilization (\%)',labelpad=25.0,size=35)
 ax.set_ylabel('Acceptance Ratio (\%)',labelpad=25.0,size=35)
 ax.spines['top'].set_color('none')
 ax.spines['bottom'].set_color('none')
